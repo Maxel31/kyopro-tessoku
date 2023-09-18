@@ -1,21 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
+# define rep(i, n) for(int i =1; i <= (n); ++i)
 using ll = long long;
-
-int N;
-int h[100009], cost[100009];
+using P = pair<int, int>;
+const long long INF = 1LL << 60;
 
 int main(){
     // 入力
+    int N, h[100009], dp[100009];
     cin >> N;
-    for(int i = 1; i <= N; i++) cin >> h[i];
+    rep(i, N) cin >> h[i];
 
     // 動的計画法
-    cost[1] = 0;
-    cost[2] = abs(h[2] - h[1]);
+    // dp[i] : 足場iに到達するまでの最小コスト
+    dp[1] = 0;
+    dp[2] = abs(h[2] - h[1]);
+    
     for(int i = 3; i <= N; i++){
-        cost[i] = min(cost[i - 1] + abs(h[i] - h[i - 1]), cost[i - 2] + abs(h[i] - h[i - 2]));
+        dp[i] = min(dp[i - 1] + abs(h[i] - h[i - 1]), dp[i - 2] + abs(h[i] - h[i - 2]));
     }
-    cout << cost[N] << endl;
+    
+    cout << dp[N] << endl;
     return 0;
 }
